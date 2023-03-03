@@ -16,16 +16,8 @@
 
 ## QA
 
-### Type Hint
+一些有趣的问题或者内容
 
-Python 3.5 引入 `typing` 包来支持 type hint
-
-Python 3.7 引入 `__future__.annotations` 来修正以前的问题
-- 类型标注只能前置声明 (不能声明未定义类型)
-- 类型标注降低效率
-
-同时 给`typing`模块添加了解释器支持(PEP560)
-
-Python 3.8 `typing` 添加
-- `Literal` 指定返回几个字面值
-- `Final`   指定该值不可变
+- Type Hint: 类型标注
+- asyncio: 异步编程
+- decorator: 装饰器
