@@ -1,7 +1,7 @@
 # [Python 3.9][Python3.9]
 
 - [PEP 584][PEP584]: 新增字典合并和更新运算符(合并: `|`  更新:`|=`)
-- [PEP 586][PEP585]: 标准容器泛型的类型标注
+- [PEP 585][PEP585]: 标准容器泛型的类型标注
 - [PEP 616][PEP616]: 更宽松的修饰器语法限制
 
 ## PEP584
@@ -19,13 +19,17 @@ old | {"k1":1}
 
 ## PEP585
 
-如果使用 `__future__.annotaions` 那么可以直接将内置容器作为泛型来进行类型标注
-
-> Python会泛型擦除
+对于 `__future__.annotaions` 运行时保留泛型参数
 
 ```python
-def greet_everyone(names: list[str]) -> dict[str, str]:
-    pass
+>>> list is list[str]
+False
+>>> list == list[str]
+False
+>>> list[str] == list[str]
+True
+>>> list[str] == list[int]
+False
 ```
 
 ## PEP616
