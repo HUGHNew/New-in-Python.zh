@@ -2,6 +2,8 @@
 
 Python 3.5 引入 `typing` 包来支持 type hint
 
+此时已经引入了`TypeVar` `Generic`对于泛型标注的支持
+
 Python 3.7 引入 `__future__.annotations` 来修正以前的问题
 - 类型标注只能前置声明 (不能声明未定义类型)
 - 类型标注降低效率
@@ -31,3 +33,5 @@ Python 3.11
 新增类型
 - `Self`
 - `LiteralString` 字符串常量
+
+目前新增的TypeHint趋向于复杂化 很多新特性并不通用
