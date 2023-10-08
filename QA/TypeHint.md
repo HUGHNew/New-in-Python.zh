@@ -34,4 +34,31 @@ Python 3.11
 - `Self`
 - `LiteralString` 字符串常量
 
+Python 3.12
+
+新增
+- 使用 `TypedDict` 作为 `**kwargs` 的类型标注
+- 子类的 `override`
+- 泛型的简写(比较像Kotlin的写法)
+
+```python
+# new generic syntax in Python
+def max[T](args: Iterable[T]) -> T: ...
+
+class list[T]:
+    def __getitem__(self, index: int, /) -> T: ...
+
+# type keyword
+type Point2d = tuple[float, float] # 新写法
+
+from typing import TypedDict, Unpack
+
+class Movie(TypedDict):
+  name: str
+  year: int
+
+# type annotations for kwargs
+def foo(**kwargs: Unpack[Movie]): ...
+```
+
 目前新增的TypeHint趋向于复杂化 很多新特性并不通用
