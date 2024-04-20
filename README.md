@@ -18,7 +18,8 @@
 
 一些有趣的问题或者内容
 
-- Type Hint: 类型标注
+- [builtin](QA/Builtin.md): 内置函数
+- [TypeHint](QA/TypeHint.md): 类型标注
 - asyncio: 异步编程
-- decorator: 装饰器
-- with/context: 上下文相关内容
+- [decorator](QA/Decorator.md): 装饰器
+- [with/context](QA/Context.md): 上下文相关内容
