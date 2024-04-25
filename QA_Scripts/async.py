@@ -79,5 +79,76 @@ async def subproc():
 # asyncio.run(coroutines_2())
 # asyncio.run(tasks_2())
 # asyncio.run(coro_runtime())
-asyncio.run(subproc())
+@timer
+async def runtime():
+    async def ham(bf, af):
+        print(bf)
+        await asyncio.sleep(0.4)
+        print(af)
+
+    async def say(idx):
+        print(f"say {idx}")
+        await asyncio.sleep(1)
+        print(f"done {idx}")
+
+    s = asyncio.sleep(1)
+    h = ham("enter", "quit")
+    y = say(42)
+    await asyncio.gather(s, h, y)
+    # h = ham("enter", "quit")
+    # print(h.cr_running)
+    # await say(42)
+    # print("before await")
+    # await h
+    # await asyncio.gather(ham("enter", "quit"), say(42))
+    # await asyncio.gather(ham("enter", "quit"), asyncio.sleep(1))
+    # await asyncio.gather(*[say(i) for i in range(5)])
+
+async def sleeper():
+    async def sync_sleeper(sec):
+        time.sleep(sec)
+        return sec
+
+    async def async_sleeper(sec):
+        await asyncio.sleep(sec)
+        return sec
+
+    @timer
+    async def sync_sync():
+        await asyncio.gather(sync_sleeper(1), sync_sleeper(1))
+
+    @timer
+    async def sync_async():
+        await asyncio.gather(sync_sleeper(1), async_sleeper(1))
+
+    @timer
+    async def async_sync():
+        await asyncio.gather(async_sleeper(1), sync_sleeper(1))
+
+    @timer
+    async def async_async():
+        await asyncio.gather(async_sleeper(1), async_sleeper(1))
+
+    await sync_sync()
+    await sync_async()
+    await async_sync()
+    await async_async()
+
+asyncio.run(sleeper())
 # print(type(main), asyncio.iscoroutinefunction(main))
+
+async def tg():
+    async with asyncio.TaskGroup() as group:
+        task1 = group.create_task(sleeper())
+        task2 = group.create_task(runtime())
+    print("Both tasks have completed now.")
+
+def manual_start_async():
+    loop = asyncio.new_event_loop()
+    try:
+        loop.run_until_complete(runtime())
+    finally:
+        loop.close()
+
+# if __name__ == "__main__":
+#     manual_start_async()
