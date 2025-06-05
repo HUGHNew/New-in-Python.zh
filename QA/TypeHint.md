@@ -62,3 +62,36 @@ def foo(**kwargs: Unpack[Movie]): ...
 ```
 
 目前新增的TypeHint趋向于复杂化 很多新特性并不通用
+
+Python 3.13
+
+新增
+- 默认支持了三个类型参数(不需要 import 就能用了) `from typing import TypeVar, ParamSpec, TypeVarTuple`
+- `warning.deprecated`
+- `typing.ReadOnly` (相当于const) 可用于 `typing.TypedDict` 还可以跟 `Required/NotRequired` 之类的结合使用
+- `typing.TypeIs` (跟`typing.TypeGuard`类似) 用于type checker做类型细化(narrow)推断的 更高级的`isinstance`
+
+```python
+from typing import ReadOnly, TypeIs, Required, NotRequired, TypedDict
+from warnings import deprecated
+
+
+class Person(TypedDict):
+    name: NotRequired[str]
+    uuid: ReadOnly[Required[str]]
+
+def is_person(person) -> TypeIs[Person]:
+    return isinstance(person, dict) and "name" in person and "uuid" in person
+
+@deprecated("Use print instead")
+def person_printer[T](person: T):
+    if is_person(person):
+        print(f"{person['name']}->{person['uuid']}")
+    else:
+        print("Not a person")
+
+if __name__ == "__main__":
+    p0 = Person(name="John", uuid="123")
+    perror = Person(name="Doe") # error in type checker
+    person_printer(p0)
+```
